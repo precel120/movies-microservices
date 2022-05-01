@@ -6,7 +6,10 @@ const movieSchema = new Schema({
 	Title: { type: String, required: true },
 	Released: { type: Date, required: true },
 	Genre: { type: String, required: true },
-	Director: { type: String, required: true }
+	Director: { type: String, required: true },
+	// CreatedBy: { type: mongoose.SchemaTypes.ObjectId, required: true },
+	CreatedBy: { type: String, required: true },
+	CreatedOn: { type: Date, required: true }
 });
 
 module.exports = Movie = mongoose.model("movies", movieSchema);

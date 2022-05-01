@@ -7,6 +7,8 @@ services:
     ports:
       - published: ${APP_PORT:-3000}
         target: 3000
+    volumes:
+      - ./auth/:/auth/
     environment:
       JWT_SECRET: ${JWT_SECRET}
   movies:
@@ -16,8 +18,24 @@ services:
     ports:
       - published: ${APP_PORT:-3001}
         target: 3001
+    volumes:
+      - ./movies/:/movies/
     environment:
       OMDb_SECRET: ${OMDb_SECRET}
+      MONGODB: "mongodb://mongo:27017/docker-node-mongo"
+    depends_on:
+      - db
+  users:
+    build:
+      context: './users'
+      dockerfile: Dockerfile
+    ports:
+      - published: ${APP_PORT:-3002}
+        target: 3002
+    volumes:
+      - ./users/:/users/
+    environment:
+      MONGODB: "mongodb://mongo:27017/docker-node-mongo"
     depends_on:
       - db
   db:
