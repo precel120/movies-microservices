@@ -1,0 +1,28 @@
+version: "3.2"
+services:
+  auth:
+    build:
+      context: './auth'
+      dockerfile: Dockerfile
+    ports:
+      - published: ${APP_PORT:-3000}
+        target: 3000
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+  movies:
+    build:
+      context: './movies'
+      dockerfile: Dockerfile
+    ports:
+      - published: ${APP_PORT:-3001}
+        target: 3001
+    environment:
+      OMDb_SECRET: ${OMDb_SECRET}
+    depends_on:
+      - db
+  db:
+    container_name: mongo
+    image: mongo
+    ports:
+      - '27017:27017'
+  
