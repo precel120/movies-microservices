@@ -26,7 +26,7 @@ app.post("/auth", (req, res, next) => {
   }
 
   try {
-    const token = auth(username, password);
+    const token = auth.GenerateToken(username, password);
 
     return res.status(200).json({ token });
   } catch (error) {
@@ -34,6 +34,18 @@ app.post("/auth", (req, res, next) => {
       return res.status(401).json({ error: error.message });
     }
 
+    next(error);
+  }
+});
+
+app.get("/verify", (req, res, next) => {
+  try {
+    const validationData = auth.ValidateSignature(req);
+    return res.status(200).json(validationData);
+  } catch(error) {
+    if (error instanceof AuthError) {
+      return res.status(401).json({ error: error.message });
+    }
     next(error);
   }
 });

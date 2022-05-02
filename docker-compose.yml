@@ -1,6 +1,7 @@
 version: "3.2"
 services:
   auth:
+    container_name: auth
     build:
       context: './auth'
       dockerfile: Dockerfile
@@ -12,6 +13,7 @@ services:
     environment:
       JWT_SECRET: ${JWT_SECRET}
   movies:
+    container_name: movies
     build:
       context: './movies'
       dockerfile: Dockerfile
@@ -23,24 +25,21 @@ services:
     environment:
       OMDb_SECRET: ${OMDb_SECRET}
       MONGODB: "mongodb://mongo:27017/docker-node-mongo"
-    depends_on:
+    links:
       - db
-  users:
-    build:
-      context: './users'
-      dockerfile: Dockerfile
-    ports:
-      - published: ${APP_PORT:-3002}
-        target: 3002
-    volumes:
-      - ./users/:/users/
-    environment:
-      MONGODB: "mongodb://mongo:27017/docker-node-mongo"
-    depends_on:
-      - db
+      - auth
   db:
     container_name: mongo
     image: mongo
     ports:
-      - '27017:27017'
-  
+      - "27017:27017"
+  nginx-proxy:
+    container_name: nginx
+    build:
+      dockerfile: Dockerfile
+      context: ./proxy
+    links:
+      - movies
+      - auth
+    ports:
+      - "80:80"

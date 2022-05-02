@@ -7,8 +7,7 @@ const movieSchema = new Schema({
 	Released: { type: Date, required: true },
 	Genre: { type: String, required: true },
 	Director: { type: String, required: true },
-	// CreatedBy: { type: mongoose.SchemaTypes.ObjectId, required: true },
-	CreatedBy: { type: String, required: true },
+	CreatedBy: { type: Number, required: true },
 	CreatedOn: { type: Date, required: true }
 });
 
