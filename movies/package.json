@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watchAll --no-cache"
   },
   "keywords": [],
   "author": "precel120",
@@ -15,5 +15,10 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.1",
     "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "jest": "^28.0.3",
+    "mongodb-memory-server": "^8.5.2",
+    "supertest": "^6.2.3"
   }
 }
