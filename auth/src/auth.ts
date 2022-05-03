@@ -1,4 +1,6 @@
-const jwt = require("jsonwebtoken");
+import { Request } from "express";
+import jwt from "jsonwebtoken";
+import { ValidationResponse } from "./types";
 
 const users = [
   {
@@ -17,11 +19,16 @@ const users = [
   },
 ];
 
-class AuthError extends Error {}
+class AuthError extends Error {
+  constructor(msg: string) {
+    super(msg);
+    Object.setPrototypeOf(this, AuthError.prototype);
+  }
+}
 
-const authFactory = (secret) => {
+const authFactory = (secret: jwt.Secret) => {
   return {
-    GenerateToken(username, password) {
+    GenerateToken(username: String, password: String) {
       const user = users.find((u) => u.username === username);
   
       if (!user || user.password !== password) {
@@ -42,20 +49,20 @@ const authFactory = (secret) => {
         }
       );
     },
-    ValidateSignature(req) {
+    ValidateSignature(req: Request) {
       try {
         const signature = req.get('Authorization');
         if(!signature) {
           throw new AuthError("invalid signature");
         }
-        const data = {
-          isAuthorized: false
+        const data: ValidationResponse = {
+          isAuthorized: false,
         }
         if (signature) {
           const payload = jwt.verify(signature.split(' ')[1], secret);
           if (payload) {
-            data.decoded = payload;
             data.isAuthorized = true;
+            data.decoded = payload;
           }
         }
         return data;
@@ -66,7 +73,7 @@ const authFactory = (secret) => {
   }
 }
 
-module.exports = {
+export {
   authFactory,
   AuthError,
 };

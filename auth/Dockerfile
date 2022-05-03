@@ -8,4 +8,4 @@ RUN npm install --only=prod
 RUN mkdir ./src
 COPY ./src ./src
 
-CMD ["node", "./src/server.js"]
+CMD ["npm", "start"]
