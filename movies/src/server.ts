@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import {app} from "./app";
+import app from "./app";
 
 const PORT = 3001;
 const { OMDb_SECRET, MONGODB } = process.env;

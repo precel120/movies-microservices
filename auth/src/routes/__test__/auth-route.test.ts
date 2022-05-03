@@ -1,5 +1,5 @@
 import request from "supertest";
-import { app } from "../../app";
+import app from "../../app";
 
 describe("/auth tests", () => {
   it("receives JWT token", async () => {
