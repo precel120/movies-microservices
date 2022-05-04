@@ -8,6 +8,7 @@ const ValidateUser = async (
   next: NextFunction
 ) => {
   try {
+    // JWT token is provided in Authorization header
     const authHeader = req.get("Authorization");
     if (!authHeader) {
       return res.status(403).json({ message: "Auth header missing" });
@@ -15,6 +16,7 @@ const ValidateUser = async (
     const config = {
       headers: { Authorization: authHeader },
     };
+    // call to auth service to verify the user
     const retrievedData = await axios.get(
       "http://auth:3000/auth/verify",
       config

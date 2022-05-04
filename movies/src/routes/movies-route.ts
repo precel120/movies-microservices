@@ -35,6 +35,7 @@ router.post(
     if (!req.body) {
       return res.status(400).json({ error: "invalid body payload" });
     }
+    // dataFromMiddleware comes from ValidateUser and has information such as userId, role or name
     if (!req.dataFromMiddleware) {
       return res.status(400).json({ message: "no data from middleware" });
     }
@@ -45,6 +46,7 @@ router.post(
     }
     try {
       const { userId, role } = req.dataFromMiddleware;
+      // basic user can't create more than 5 movies in the same month
       if (role === "basic") {
         const retrievedUserMovies = await Movie.aggregate([
           {
@@ -65,6 +67,7 @@ router.post(
             .json({ error: "Basic users can only insert 5 movies per month" });
         }
       }
+      // retrieve movie information from OMDb
       const retrievedOMDBMovies = await axios.get(
         `http://www.omdbapi.com/?t="${title}"&apikey=${OMDb_SECRET}`
       );
