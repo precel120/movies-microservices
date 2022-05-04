@@ -12,7 +12,7 @@ on:
 jobs:
   auth-test:
     runs-on: ubuntu-latest
-    default:
+    defaults:
       run:
         working-directory: ./auth
     strategy:
