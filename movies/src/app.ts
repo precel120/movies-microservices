@@ -10,12 +10,7 @@ app.use(cors());
 
 app.use(movieRouter);
 
-app.use((error: Error, _: Request, res: Response, __: NextFunction) => {
-  console.error(
-    `Error processing request ${error}. See next message for details`
-  );
-  console.error(error);
-
+app.use((_: Error, __: Request, res: Response, ___: NextFunction) => {
   return res.status(500).json({ error: "internal server error" });
 });
 
