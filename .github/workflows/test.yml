@@ -12,12 +12,9 @@ on:
 jobs:
   auth-test:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
     - uses: actions/checkout@v3
     - run: ls
@@ -26,6 +23,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+        cache-dependency-path: ./auth/package-lock.json
         cache: 'npm'
     - run: npm ci
     - run: npm test
