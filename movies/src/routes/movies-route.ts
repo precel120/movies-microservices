@@ -67,18 +67,18 @@ router.post(
       }
       const retrievedOMDBMovies = await axios.get(
         `http://www.omdbapi.com/?t="${title}"&apikey=${OMDb_SECRET}`
-        );
-        const { data } = retrievedOMDBMovies;
-        const { Title, Genre, Director, Released } = data;
-        const movie = new Movie({
-          Title,
-          Genre,
-          Director,
-          Released,
-          CreatedBy: userId,
-          CreatedOn: Date.now(),
-        });
-        const savedMovie = await movie.save();
+      );
+      const { data } = retrievedOMDBMovies;
+      const { Title, Genre, Director, Released } = data;
+      const movie = new Movie({
+        Title,
+        Genre,
+        Director,
+        Released,
+        CreatedBy: userId,
+        CreatedOn: Date.now(),
+      });
+      const savedMovie = await movie.save();
       return res.status(200).json(JSON.stringify(savedMovie));
     } catch (error) {
       return next(error);

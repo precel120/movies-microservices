@@ -15,7 +15,10 @@ const ValidateUser = async (
     const config = {
       headers: { Authorization: authHeader },
     };
-    const retrievedData = await axios.get("http://auth:3000/auth/verify", config);
+    const retrievedData = await axios.get(
+      "http://auth:3000/auth/verify",
+      config
+    );
     const { data } = retrievedData;
     const { isAuthorized, decoded } = data;
     if (isAuthorized) {
