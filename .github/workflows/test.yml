@@ -45,4 +45,6 @@ jobs:
         cache-dependency-path: ./movies/package-lock.json
         cache: 'npm'
     - run: npm ci
+      working-directory: ./auth
+    - run: npm ci
     - run: npm test
