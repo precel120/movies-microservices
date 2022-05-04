@@ -28,3 +28,21 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm test
+  movie-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./movies
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache-dependency-path: ./movies/package-lock.json
+        cache: 'npm'
+    - run: npm ci
+    - run: npm test
