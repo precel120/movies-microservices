@@ -26,4 +26,6 @@ jobs:
         cache-dependency-path: ./auth/package-lock.json
         cache: 'npm'
     - run: npm ci
+      working-directory: ./auth
     - run: npm test
+      working-director: ./auth
