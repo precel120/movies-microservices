@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "start": "ts-node-dev --poll src/server.ts",
-    "test": "jest --watchAll --no-cache"
+    "test": "jest --no-cache",
+    "test-dev": "jest --watchAll --no-cache"
   },
   "keywords": [],
   "author": "precel120",
