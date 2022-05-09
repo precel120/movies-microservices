@@ -2,16 +2,20 @@
 
 Two simple microservices implemented in Node.JS, with Express. Run with `Docker`, using `docker-compose`.
 Database used is MongoDB, in a `Docker` image.
-All calls to any of the services go through `nginx` proxy on port 80. 
-So you don't have to worry about which port should you use for which service.
-URL which needs to be used is:
+
+URLs which needs to be used for calling both services are:
 
 ```
-http://localhost:80
+Auth:
+http://localhost:3000/auth/(sign or verify)
+Movies:
+http://localhost:3001/movies
 
 or
-
-http://0.0.0.0:80
+Auth:
+http://0.0.0.0:3000/auth/(sign or verify)
+Movies:
+http://0.0.0.0:3001/movies
 ```
 
 ## Prerequisites
@@ -45,6 +49,7 @@ You can start the test by simply running `npm test` command in the directory of 
 
 # Movies service
 
+Runs on Port 3001
 Simple Movie API with two endpoints:
 
 1. `POST /movies`
@@ -71,6 +76,7 @@ Authorization: Bearer <token>
 
 # Authorization service
 
+Runs on Port 3000
 Simple Movie API with two endpoints:
 
 1. `POST /auth/sign`
@@ -132,7 +138,7 @@ To authorize user call the auth service using for example `curl`.
 Request
 
 ```
-curl --location --request POST '0.0.0.0:80/auth/sign' \
+curl --location --request POST '0.0.0.0:3000/auth/sign' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "username": "basic-thomas",
