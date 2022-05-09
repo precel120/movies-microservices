@@ -80,7 +80,7 @@ describe("/movies tests", () => {
   });
 
   it("POST gets 400 when title is missing", async () => {
-    const userRole = "premium"
+    const userRole = "premium";
     const signResponse = await request(authApp)
       .post("/auth/sign")
       .send({

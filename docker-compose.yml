@@ -25,7 +25,7 @@ services:
     environment:
       OMDb_SECRET: ${OMDb_SECRET}
       MONGODB: "mongodb://mongo:27017/docker-node-mongo"
-    links:
+    depends_on:
       - db
       - auth
   db:
@@ -33,13 +33,3 @@ services:
     image: mongo
     ports:
       - "27017:27017"
-  nginx-proxy:
-    container_name: nginx
-    build:
-      dockerfile: Dockerfile
-      context: ./proxy
-    links:
-      - movies
-      - auth
-    ports:
-      - "80:80"

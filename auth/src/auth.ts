@@ -30,11 +30,11 @@ const authFactory = (secret: jwt.Secret) => {
   return {
     GenerateToken(username: String, password: String) {
       const user = users.find((u) => u.username === username);
-  
+
       if (!user || user.password !== password) {
         throw new AuthError("invalid username or password");
       }
-  
+
       return jwt.sign(
         {
           userId: user.id,
@@ -51,29 +51,26 @@ const authFactory = (secret: jwt.Secret) => {
     },
     ValidateSignature(req: Request) {
       try {
-        const signature = req.get('Authorization');
-        if(!signature) {
+        const signature = req.get("Authorization");
+        if (!signature) {
           throw new AuthError("invalid signature");
         }
         const data: ValidationResponse = {
           isAuthorized: false,
-        }
+        };
         if (signature) {
-          const payload = jwt.verify(signature.split(' ')[1], secret);
+          const payload = jwt.verify(signature.split(" ")[1], secret);
           if (payload) {
             data.isAuthorized = true;
             data.decoded = payload;
           }
         }
         return data;
-      } catch(error) {
+      } catch (error) {
         throw new AuthError("validating signature failed");
       }
-    }
-  }
-}
-
-export {
-  authFactory,
-  AuthError,
+    },
+  };
 };
+
+export { authFactory, AuthError };

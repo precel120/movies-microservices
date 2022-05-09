@@ -30,16 +30,19 @@ router.post("/auth/sign", (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.get("/auth/verify", (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const validationData = ValidateSignature(req);
-    return res.status(200).json(validationData);
-  } catch (error) {
-    if (error instanceof AuthError) {
-      return res.status(401).json({ error: error.message });
+router.get(
+  "/auth/verify",
+  (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const validationData = ValidateSignature(req);
+      return res.status(200).json(validationData);
+    } catch (error) {
+      if (error instanceof AuthError) {
+        return res.status(401).json({ error: error.message });
+      }
+      next(error);
     }
-    next(error);
   }
-});
+);
 
 export default router;
